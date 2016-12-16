@@ -13,10 +13,6 @@ use Collectd::Unixsock();
 	our $val_type = $ARGV[3] || "undef";
         our $collectd_version;
 
-        $collectd_version = `collectd -h |grep \'http://\' | sed \'s/\^.*[^0-9]\\([0-9]*\\.[0-9]*\\.[0-9]*\\).*\$/\\1/\' | tr -d '\n'`;
-
-#        print "INFO: collectd version: " . $collectd_version . "\n";
-
 	if( $command eq "LISTVAL" and $val eq "undef"){
 	    $val = "ALL"
 	}
@@ -25,51 +21,23 @@ use Collectd::Unixsock();
 	
 	    if( $val =~ /^.*-virt_cpu_total/ ){
 		@vals = split(/-virt/, $val);
-		
-		if( $collectd_version =~ /5.5/ ){
-		   $val = $vals[0] . "/virt-" . $vals[0] . "/virt" . $vals[1]
-		}
-		else{
-		   $val = $vals[0] . "/libvirt/" . "virt" . $vals[1]
-		}
+		$val = $vals[0] . "/virt-" . $vals[0] . "/virt" . $vals[1]
 	    }
 	    elsif($val =~ /^.*-disk-/ and $val_type =~ /^OPS/){
 		@vals = split(/-disk/, $val);
-		
-		if( $collectd_version =~ /5.5/ ){
-		  $val = $vals[0] . "/virt-" . $vals[0] . "/disk_ops" .$vals[1]
-		}
-		else {
-		  $val = $vals[0] . "/libvirt/disk_ops" .$vals[1]
-		}
+     	        $val = $vals[0] . "/virt-" . $vals[0] . "/disk_ops" .$vals[1]
 	    }
 	    elsif($val =~ /^.*-disk-/ and $val_type =~ /^OCT/){
 		@vals = split(/-disk/, $val);
-		
-		if( $collectd_version =~ /5.5/ ){
-		    $val = $vals[0] . "/virt-" . $vals[0] . "/disk_octets" .$vals[1]
-		}
-		else {
-		    $val = $vals[0] . "/libvirt/disk_octets" .$vals[1]
-		}
+		$val = $vals[0] . "/virt-" . $vals[0] . "/disk_octets" .$vals[1]
 	    }
 	    elsif($val =~ /^.*-if-/ and $val_type =~ /^NET-PACKETS/){
 		@vals = split(/-if/, $val);
-		if( $collectd_version =~ /5.5/ ){
-		    $val = $vals[0] . "/virt-" . $vals[0] . "/if_packets" . $vals[1]
-		}
-		else {
-		    $val = $vals[0] . "/libvirt/if_packets" . $vals[1]
-		}
+		$val = $vals[0] . "/virt-" . $vals[0] . "/if_packets" . $vals[1]
 	    }
 	    elsif($val =~ /^.*-if-/ and $val_type =~ /^NET-OCTETS/){
 		@vals = split(/-if/, $val);
-		if( $collectd_version =~ /5.5/ ){
-		    $val = $vals[0] . "/virt-" . $vals[0] . "/if_octets" .$vals[1]
-		}
-		else{
-		    $val = $vals[0] . "/libvirt/if_octets" .$vals[1]
-		}
+		$val = $vals[0] . "/virt-" . $vals[0] . "/if_octets" .$vals[1]
 	    }
 	    $command .= " " . $val;
 	    
