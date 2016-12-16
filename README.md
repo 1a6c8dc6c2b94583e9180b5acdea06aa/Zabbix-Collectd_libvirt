@@ -1,4 +1,3 @@
-# Zabbix Template Linux Collectd_libvirt 
 
 A Zabbix templates for libvirt stats
 
