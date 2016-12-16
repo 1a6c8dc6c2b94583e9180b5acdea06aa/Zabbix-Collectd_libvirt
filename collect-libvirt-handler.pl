@@ -11,7 +11,6 @@ use Collectd::Unixsock();
 	my @vals;
 	our $val = $ARGV[2] || "undef";
 	our $val_type = $ARGV[3] || "undef";
-        our $collectd_version;
 
 	if( $command eq "LISTVAL" and $val eq "undef"){
 	    $val = "ALL"
@@ -176,7 +175,6 @@ sub putidjson {
         my $stringjson;
 #        my $stringjson5;
 	our $val;
-#	our $collectd_version;
 
         #debug dumping
         sub print_hash {
