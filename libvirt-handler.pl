@@ -185,11 +185,11 @@ sub putidjson {
                 $string .= "-" . $ident->{'plugin_instance'};
         }
 
-	if ($ident->{'plugin'} eq "libvirt" and $ident->{'type'} =~ /^disk/ and $val eq "LIBVIRT-DISK"){
+	if ($ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^disk/ and $val eq "virt-DISK"){
 	    $ident->{'type'} =~ s/_ops//;
             $string .= "-" . $ident->{'type'};
 	}
-	elsif ($ident->{'plugin'} eq "libvirt" and $ident->{'type'} =~ /^if/ and $val eq "LIBVIRT-NET") {
+	elsif ($ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^if/ and $val eq "virt-NET") {
 	    $ident->{'type'} =~ s/_packets//;
     	    $string .= "-" . $ident->{'type'};
 	}
@@ -206,13 +206,13 @@ sub putidjson {
 	if( $val eq "ALL"){
     	    return $stringjson;
 	}
-	elsif( $ident->{'plugin'} eq "libvirt" and $ident->{'type'} eq "virt_cpu_total" and $val eq "LIBVIRT-CPU"){
+	elsif( $ident->{'plugin'} eq "virt-.*" and $ident->{'type'} eq "virt_cpu_total" and $val eq "virt-CPU"){
     	    return $stringjson;
 	}
-	elsif( $ident->{'plugin'} eq "libvirt" and $ident->{'type'} =~ /^disk$/ and $val eq "LIBVIRT-DISK"){
+	elsif( $ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^disk$/ and $val eq "virt-DISK"){
     	    return $stringjson;
 	}
-	elsif( $ident->{'plugin'} eq "libvirt" and $ident->{'type'} =~ /^if$/ and $val eq "LIBVIRT-NET"){
+	elsif( $ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^if$/ and $val eq "virt-NET"){
     	    return $stringjson;
 	}
 }
