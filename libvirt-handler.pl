@@ -181,9 +181,13 @@ sub putidjson {
 	    $string .= "-" . $ident->{'plugin'};
 	}
 
-        if (defined $ident->{'plugin_instance'}) {
-                $string .= "-" . $ident->{'plugin_instance'};
-        }
+        #if (defined $ident->{'plugin_instance'}) {
+        #    $string .= "-" . $ident->{'plugin_instance'};
+        #}
+	
+        if (defined $ident->{'plugin_instance'} and $ident->{'plugin'} ne "virt") {
+            $string .= "-" . $ident->{'plugin_instance'};
+        }	
 
 	if ($ident->{'plugin'} eq "virt" and $ident->{'type'} =~ /^disk/ and $val eq "virt-DISK"){
 	    $ident->{'type'} =~ s/_ops//;
