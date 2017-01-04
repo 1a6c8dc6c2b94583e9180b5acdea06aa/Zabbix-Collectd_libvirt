@@ -20,23 +20,23 @@ use Collectd::Unixsock();
 	    
 	    if( $val =~ /^.*-virt_cpu_total/ ){
 		@vals = split(/-virt/, $val);
-		$val = $vals[0] . "/virt-.*/" . "virt" . $vals[1]	
+		    $val = $vals[0] . "/virt-" . $vals[0] . "/virt" . $vals[1]	
 	    }
 	    elsif($val =~ /^.*-disk-/ and $val_type =~ /^OPS/){
 		@vals = split(/-disk/, $val);
-		    $val = $vals[0] . "/virt-.*/disk_ops" .$vals[1]
+		    $val = $vals[0] . "/virt-" . $vals[0] . "/disk_ops" .$vals[1]
 	    }
 	    elsif($val =~ /^.*-disk-/ and $val_type =~ /^OCT/){
 		@vals = split(/-disk/, $val);
-		    $val = $vals[0] . "/virt-.*/disk_octets" .$vals[1]
+		    $val = $vals[0] . "/virt-" . $vals[0] . "/disk_octets" .$vals[1]
 	    }
 	    elsif($val =~ /^.*-if-/ and $val_type =~ /^NET-PACKETS/){
 		@vals = split(/-if/, $val);
-		    $val = $vals[0] . "/virt-.*/if_packets" . $vals[1]
+		    $val = $vals[0] . "/virt-" . $vals[0] . "/if_packets" . $vals[1]
 	    }
 	    elsif($val =~ /^.*-if-/ and $val_type =~ /^NET-OCTETS/){
 		@vals = split(/-if/, $val);
-		    $val = $vals[0] . "/virt-.*/if_octets" .$vals[1]
+		    $val = $vals[0] . "/virt-" . $vals[0] . "/if_octets" .$vals[1]
 	    }
 	    $command .= " " . $val;
 	    
@@ -185,11 +185,11 @@ sub putidjson {
                 $string .= "-" . $ident->{'plugin_instance'};
         }
 
-	if ($ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^disk/ and $val eq "virt-DISK"){
+	if ($ident->{'plugin'} eq "virt" and $ident->{'type'} =~ /^disk/ and $val eq "virt-DISK"){
 	    $ident->{'type'} =~ s/_ops//;
             $string .= "-" . $ident->{'type'};
 	}
-	elsif ($ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^if/ and $val eq "virt-NET") {
+	elsif ($ident->{'plugin'} eq "virt" and $ident->{'type'} =~ /^if/ and $val eq "virt-NET") {
 	    $ident->{'type'} =~ s/_packets//;
     	    $string .= "-" . $ident->{'type'};
 	}
@@ -206,13 +206,13 @@ sub putidjson {
 	if( $val eq "ALL"){
     	    return $stringjson;
 	}
-	elsif( $ident->{'plugin'} eq "virt-.*" and $ident->{'type'} eq "virt_cpu_total" and $val eq "virt-CPU"){
+	elsif( $ident->{'plugin'} eq "virt" and $ident->{'type'} eq "virt_cpu_total" and $val eq "virt-CPU"){
     	    return $stringjson;
 	}
-	elsif( $ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^disk$/ and $val eq "virt-DISK"){
+	elsif( $ident->{'plugin'} eq "virt" and $ident->{'type'} =~ /^disk$/ and $val eq "virt-DISK"){
     	    return $stringjson;
 	}
-	elsif( $ident->{'plugin'} eq "virt-.*" and $ident->{'type'} =~ /^if$/ and $val eq "virt-NET"){
+	elsif( $ident->{'plugin'} eq "virt" and $ident->{'type'} =~ /^if$/ and $val eq "virt-NET"){
     	    return $stringjson;
 	}
 }
